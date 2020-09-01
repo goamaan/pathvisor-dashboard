@@ -2,6 +2,8 @@ import 'react-perfect-scrollbar/dist/css/styles.css';
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
+import UserProvider from './Providers/UserProvider';
+import TransitionProvider from './Providers/TransitionProvider';
 import GlobalStyles from 'src/components/GlobalStyles';
 import 'src/mixins/chartjs';
 import theme from 'src/theme';
@@ -12,8 +14,12 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      {routing}
+      <UserProvider>
+        <TransitionProvider>
+          <GlobalStyles />
+          {routing}
+        </TransitionProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 };

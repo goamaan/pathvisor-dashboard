@@ -1,7 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
-import { functions } from 'firebase';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -11,7 +10,7 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
   appId: '1:938082741309:web:3293409f04e3b7004f4e54',
-  measurementId: 'G-2FYC6VNMTJ',
+  measurementId: 'G-2FYC6VNMTJ'
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -31,7 +30,7 @@ export const generateUserDocument = async (user, additionalData) => {
       await userRef.set({
         name,
         email,
-        ...additionalData,
+        ...additionalData
       });
     } catch (error) {
       console.error('Error creating user document', error);
@@ -40,14 +39,14 @@ export const generateUserDocument = async (user, additionalData) => {
   return getUserDocument(user.uid);
 };
 
-const getUserDocument = async (uid) => {
+const getUserDocument = async uid => {
   if (!uid) return null;
   try {
     const userDocument = await firestore.doc(`users/${uid}`).get();
 
     return {
       uid,
-      ...userDocument.data(),
+      ...userDocument.data()
     };
   } catch (error) {
     console.error('Error fetching user', error);
@@ -60,14 +59,14 @@ export const saveDataToFireStore = async (stripeObject, user) => {
   chargesRef.doc(pushId).set(stripeObject);
 };
 
-export const getPurchaseData = async (user) => {
+export const getPurchaseData = async user => {
   const snapshot = await firestore
     .collection(`users/${user.uid}/charges`)
     .get();
-  const charges = snapshot.docs.map((data) => data.id);
+  const charges = snapshot.docs.map(data => data.id);
   console.log(charges);
   const data = [];
-  charges.forEach(async (charge) => {
+  charges.forEach(async charge => {
     data.push(
       (await firestore.doc(`users/${user.uid}/charges/${charge}`).get()).data()
     );
