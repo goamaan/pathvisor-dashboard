@@ -16,6 +16,7 @@ import { Alert } from '@material-ui/lab';
 import Page from 'src/components/Page';
 import { auth } from '../../firebase';
 import { UserContext } from '../../Providers/UserProvider';
+import Loading from 'src/components/Loading';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,6 +45,14 @@ const LoginView = () => {
       });
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (user) {
+    navigate('/app/dashboard');
+  }
+
   return (
     <Page className={classes.root} title="Login">
       <Box
@@ -55,8 +64,8 @@ const LoginView = () => {
         <Container maxWidth="sm">
           <Formik
             initialValues={{
-              email: 'abc@example.com',
-              password: 'Password123'
+              email: '',
+              password: ''
             }}
             validationSchema={Yup.object().shape({
               email: Yup.string()

@@ -74,6 +74,17 @@ export const getPurchaseData = async user => {
   return data;
 };
 
+export const updateProfile = async (profile, user) => {
+  const userRef = firestore.doc(`users/${user.uid}`);
+  try {
+    await userRef.set({
+      ...profile
+    });
+  } catch (error) {
+    console.log('Error updating profile ', error);
+  }
+};
+
 export const saveChecklist = async (checklist, user) => {
   const checklistRef = firestore.collection(`users/${user.uid}/checklist`);
   const pushId = checklistRef.doc().id;

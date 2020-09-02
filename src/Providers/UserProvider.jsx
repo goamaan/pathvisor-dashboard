@@ -6,10 +6,10 @@ export const UserContext = createContext({
   data: [],
   purchaseIDS: [],
   purchaseNames: [],
-  loading: true,
+  loading: true
 });
 
-const UserProvider = (props) => {
+const UserProvider = props => {
   const [user, setUser] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,7 @@ const UserProvider = (props) => {
   useEffect(() => {
     if (!user) {
       async function onMount() {
-        auth.onAuthStateChanged(async (userAuth) => {
+        auth.onAuthStateChanged(async userAuth => {
           const receivedUser = await generateUserDocument(userAuth);
           setUser(receivedUser);
           setLoading(false);
@@ -32,8 +32,8 @@ const UserProvider = (props) => {
         firestore
           .collection(`users/${user.uid}/charges`)
           .get()
-          .then((snapshot) => {
-            snapshot.docs.map((doc) => final.push(doc.data()));
+          .then(snapshot => {
+            snapshot.docs.map(doc => final.push(doc.data()));
             setData(final);
           });
         setLoading(false);
@@ -43,11 +43,11 @@ const UserProvider = (props) => {
     }
   }, [user]);
 
-  const purchases = data.map((items) => items.items.map((item) => item));
+  const purchases = data.map(items => items.items.map(item => item));
   const purchaseIDS = [];
   const purchaseNames = [];
-  purchases.map((e) =>
-    e.map((item) => {
+  purchases.map(e =>
+    e.map(item => {
       purchaseIDS.push(item.id);
       purchaseNames.push(item.name);
       return null;
@@ -63,7 +63,7 @@ const UserProvider = (props) => {
         setLoading,
         data,
         purchaseIDS,
-        purchaseNames,
+        purchaseNames
       }}
     >
       {props.children}

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Container, Grid, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Budget from './Budget';
@@ -11,6 +11,8 @@ import TotalProfit from './TotalProfit';
 import TrafficByDevice from './TrafficByDevice';
 import Checklist from './Checklist/Checklist';
 import { UserContext } from '../../../Providers/UserProvider';
+import Loading from 'src/components/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +26,28 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
   const classes = useStyles();
   const { user, loading, purchaseNames, purchaseIDS } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const loadData = async () => {
+      await purchaseIDS;
+    };
+    loadData();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
+  if (!user) {
+    navigate('/login');
+  }
+
+  if (purchaseIDS.length === 0) {
+    return <Loading />;
+  }
+
+  console.log(user, purchaseIDS);
 
   return (
     <Page className={classes.root} title="Dashboard">
@@ -53,7 +77,9 @@ const Dashboard = () => {
           <Grid item lg={8} md={12} xl={9} xs={12}>
             <LatestOrders />
           </Grid> */}
-          {/* <Checklist id={purchaseIDS} /> */}
+          {purchaseIDS.map(item => (
+            <Checklist id={item} />
+          ))}
         </Grid>
       </Container>
     </Page>

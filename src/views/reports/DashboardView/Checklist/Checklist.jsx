@@ -18,7 +18,8 @@ import defaultChecklist from '../../../../defaultChecklist.json';
 
 export default function Checklist({ id }) {
   const classes = useStyles();
-
+  console.log(id);
+  console.log(defaultChecklist);
   const [checked, setChecked] = useState([
     { name: 'item-1', checked: false },
     { name: 'item-2', checked: false },

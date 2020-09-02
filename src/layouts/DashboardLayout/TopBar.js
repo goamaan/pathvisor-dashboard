@@ -9,12 +9,16 @@ import {
   Hidden,
   IconButton,
   Toolbar,
-  makeStyles
+  makeStyles,
+  Tooltip,
+  Typography
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/NotificationsOutlined';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
+import { auth } from '../../firebase';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -27,6 +31,11 @@ const useStyles = makeStyles(() => ({
 const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const classes = useStyles();
   const [notifications] = useState([]);
+  const navigate = useNavigate();
+  const onLogout = e => {
+    e.preventDefault();
+    auth.signOut().then(navigate('/login'));
+  };
 
   return (
     <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
@@ -35,20 +44,15 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
           <Logo />
         </RouterLink>
         <Box flexGrow={1} />
-        <Hidden mdDown>
-          <IconButton color="inherit">
-            <Badge
-              badgeContent={notifications.length}
-              color="primary"
-              variant="dot"
-            >
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-          <IconButton color="inherit">
-            <InputIcon />
-          </IconButton>
-        </Hidden>
+        {/* <Hidden mdDown> */}
+        <Typography variant="subtitle1" color="initial">
+          Log out
+        </Typography>
+        <IconButton color="inherit" onClick={onLogout}>
+          <ExitToAppIcon />
+        </IconButton>
+
+        {/* </Hidden> */}
         <Hidden lgUp>
           <IconButton color="inherit" onClick={onMobileNavOpen}>
             <MenuIcon />

@@ -1,10 +1,11 @@
 import React from 'react';
 
-const Logo = (props) => {
+const Logo = props => {
   return (
     <img
       alt="Logo"
-      src="/static/logo.svg"
+      src="/static/images/finallogo.png"
+      style={{ maxWidth: '50px' }}
       {...props}
     />
   );

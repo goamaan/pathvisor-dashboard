@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
@@ -10,23 +10,14 @@ import {
   Divider,
   Grid,
   TextField,
-  makeStyles
+  makeStyles,
+  FormGroup,
+  FormControlLabel,
+  Checkbox,
+  Typography
 } from '@material-ui/core';
-
-const states = [
-  {
-    value: 'alabama',
-    label: 'Alabama'
-  },
-  {
-    value: 'new-york',
-    label: 'New York'
-  },
-  {
-    value: 'san-francisco',
-    label: 'San Francisco'
-  }
-];
+import { UserContext } from 'src/Providers/UserProvider';
+import Loading from 'src/components/Loading';
 
 const useStyles = makeStyles(() => ({
   root: {}
@@ -34,21 +25,18 @@ const useStyles = makeStyles(() => ({
 
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
-  const [values, setValues] = useState({
-    firstName: 'Katarina',
-    lastName: 'Smith',
-    email: 'demo@devias.io',
-    phone: '',
-    state: 'Alabama',
-    country: 'USA'
-  });
+  const { user, loading } = useContext(UserContext);
 
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value
-    });
+  const handleChange = event => {
+    // setValues({
+    //   ...values,
+    //   [event.target.name]: event.target.value
+    // });
   };
+
+  if (loading) {
+    return null;
+  }
 
   return (
     <form
@@ -58,82 +46,69 @@ const ProfileDetails = ({ className, ...rest }) => {
       {...rest}
     >
       <Card>
-        <CardHeader
-          subheader="The information can be edited"
-          title="Profile"
-        />
+        <CardHeader subheader="The information can be edited" title="Profile" />
         <Divider />
         <CardContent>
-          <Grid
-            container
-            spacing={3}
-          >
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                helperText="Please specify the first name"
-                label="First name"
-                name="firstName"
+                helperText="Please specify the full name"
+                label="Full name"
+                name="fullName"
                 onChange={handleChange}
                 required
-                value={values.firstName}
+                value={user.name}
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                label="Last name"
-                name="lastName"
-                onChange={handleChange}
-                required
-                value={values.lastName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Email Address"
                 name="email"
                 onChange={handleChange}
                 required
-                value={values.email}
+                value={user.email}
                 variant="outlined"
+                disabled
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Phone Number"
-                name="phone"
+                label="Course/Degree I want to pursue"
+                name="course"
                 onChange={handleChange}
-                type="number"
-                value={values.phone}
+                required
+                value=""
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={12} xs={12}>
+              <Typography variant="body1" color="initial">
+                Countries I am applying to
+              </Typography>
+              <FormGroup row>
+                <FormControlLabel
+                  control={<Checkbox checked={false} name="checkedA" />}
+                  label="USA"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} name="checkedA" />}
+                  label="Canada"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} name="checkedA" />}
+                  label="UK"
+                />
+                <FormControlLabel
+                  control={<Checkbox checked={false} name="checkedA" />}
+                  label="Germany"
+                />
+              </FormGroup>
+            </Grid>
+            {/* <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Country"
@@ -144,11 +119,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 variant="outlined"
               />
             </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
+            <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
                 label="Select State"
@@ -160,28 +131,18 @@ const ProfileDetails = ({ className, ...rest }) => {
                 value={values.state}
                 variant="outlined"
               >
-                {states.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
+                {states.map(option => (
+                  <option key={option.value} value={option.value}>
                     {option.label}
                   </option>
                 ))}
               </TextField>
-            </Grid>
+            </Grid> */}
           </Grid>
         </CardContent>
         <Divider />
-        <Box
-          display="flex"
-          justifyContent="flex-end"
-          p={2}
-        >
-          <Button
-            color="primary"
-            variant="contained"
-          >
+        <Box display="flex" justifyContent="flex-end" p={2}>
+          <Button color="primary" variant="contained">
             Save details
           </Button>
         </Box>
