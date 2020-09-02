@@ -26,12 +26,29 @@ const useStyles = makeStyles(() => ({
 const ProfileDetails = ({ className, ...rest }) => {
   const classes = useStyles();
   const { user, loading } = useContext(UserContext);
+  const [state, setState] = useState({
+    name: user.name,
+    course: user.course || '',
+    usa: false,
+    canada: false,
+    uk: false,
+    germany: false
+  });
 
   const handleChange = event => {
-    // setValues({
-    //   ...values,
-    //   [event.target.name]: event.target.value
-    // });
+    console.log(event);
+    setState({
+      ...state,
+      [event.target.name]: event.target.value
+    });
+  };
+
+  const handleChangeCountry = event => {
+    console.log(event);
+    setState({
+      ...state,
+      [event.target.name]: event.target.checked
+    });
   };
 
   if (loading) {
@@ -55,10 +72,10 @@ const ProfileDetails = ({ className, ...rest }) => {
                 fullWidth
                 helperText="Please specify the full name"
                 label="Full name"
-                name="fullName"
+                name="name"
                 onChange={handleChange}
                 required
-                value={user.name}
+                value={state.name}
                 variant="outlined"
               />
             </Grid>
@@ -81,7 +98,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 name="course"
                 onChange={handleChange}
                 required
-                value=""
+                value={state.course}
                 variant="outlined"
               />
             </Grid>
@@ -91,19 +108,43 @@ const ProfileDetails = ({ className, ...rest }) => {
               </Typography>
               <FormGroup row>
                 <FormControlLabel
-                  control={<Checkbox checked={false} name="checkedA" />}
+                  control={
+                    <Checkbox
+                      onChange={handleChangeCountry}
+                      checked={state.usa}
+                      name="usa"
+                    />
+                  }
                   label="USA"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={false} name="checkedA" />}
+                  control={
+                    <Checkbox
+                      onChange={handleChangeCountry}
+                      checked={state.canada}
+                      name="canada"
+                    />
+                  }
                   label="Canada"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={false} name="checkedA" />}
+                  control={
+                    <Checkbox
+                      onChange={handleChangeCountry}
+                      checked={state.uk}
+                      name="uk"
+                    />
+                  }
                   label="UK"
                 />
                 <FormControlLabel
-                  control={<Checkbox checked={false} name="checkedA" />}
+                  control={
+                    <Checkbox
+                      onChange={handleChangeCountry}
+                      checked={state.germany}
+                      name="germany"
+                    />
+                  }
                   label="Germany"
                 />
               </FormGroup>
