@@ -38,7 +38,7 @@ const LoginView = () => {
       .signInWithEmailAndPassword(email, password)
       .then(res => {
         setUser(res);
-        navigate('/app/dashboard');
+        navigate('/home');
       })
       .catch(error => {
         setError(error.message);
@@ -50,7 +50,8 @@ const LoginView = () => {
   }
 
   if (user) {
-    navigate('/app/dashboard');
+    navigate('/home');
+    return null;
   }
 
   return (
@@ -155,7 +156,9 @@ const LoginView = () => {
                   Don't have an account?{' '}
                   <a
                     component={RouterLink}
-                    href="http://localhost:3000/signup"
+                    target="_blank"
+                    rel="noopener noreference"
+                    href="http://yourpathvisor.com/signup"
                     variant="h6"
                   >
                     Sign up

@@ -74,14 +74,14 @@ export const getPurchaseData = async user => {
   return data;
 };
 
-export const updateProfile = async (profile, user) => {
+export const updateData = async (data, user) => {
   const userRef = firestore.doc(`users/${user.uid}`);
   try {
     await userRef.set({
-      ...profile
+      ...data
     });
   } catch (error) {
-    console.log('Error updating profile ', error);
+    console.log('Error updating data ', error);
   }
 };
 

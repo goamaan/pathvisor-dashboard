@@ -32,19 +32,14 @@ import useStyles from './styles';
 
 const items = [
   {
-    href: '/app/dashboard',
+    href: '/home',
     icon: BarChartIcon,
     title: 'Dashboard'
   },
   {
-    href: '/app/account',
+    href: '/profile',
     icon: UserIcon,
     title: 'Profile'
-  },
-  {
-    href: '/app/settings',
-    icon: SettingsIcon,
-    title: 'Settings'
   }
 ];
 
@@ -76,13 +71,33 @@ const NavBar = ({ onMobileClose, openMobile }) => {
               />
             ))}
           </List>
+          <ListItem className={classes.item} disableGutters>
+            <Button
+              activeClassName={classes.active}
+              className={classes.button}
+              disabled
+            >
+              <File className={classes.icon} size="20" />
+              <span className={classes.title}>File Upload (Coming soon)</span>
+            </Button>
+          </ListItem>
+          <ListItem className={classes.item} disableGutters>
+            <Button
+              activeClassName={classes.active}
+              className={classes.button}
+              href="https://www.yourpathvisor.com"
+            >
+              <SkipBack className={classes.icon} size="20" />
+              <span className={classes.title}>Back to Home </span>
+            </Button>
+          </ListItem>
         </Box>
         <Box flexGrow={1} />
       </Box>
     );
   }
 
-  if (!loading) {
+  if (!loading && user) {
     content = (
       <Box height="100%" display="flex" flexDirection="column">
         <Box alignItems="center" display="flex" flexDirection="column" p={2}>
@@ -128,6 +143,34 @@ const NavBar = ({ onMobileClose, openMobile }) => {
         </Box>
         <Box flexGrow={1} />
       </Box>
+    );
+  }
+
+  if (!user) {
+    return (
+      <>
+        <Hidden lgUp>
+          <Drawer
+            anchor="left"
+            classes={{ paper: classes.mobileDrawer }}
+            onClose={onMobileClose}
+            open={openMobile}
+            variant="temporary"
+          >
+            {content}
+          </Drawer>
+        </Hidden>
+        <Hidden mdDown>
+          <Drawer
+            anchor="left"
+            classes={{ paper: classes.desktopDrawer }}
+            open
+            variant="persistent"
+          >
+            {content}
+          </Drawer>
+        </Hidden>
+      </>
     );
   }
 

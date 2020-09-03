@@ -4,26 +4,25 @@ export default makeStyles({
   root: {
     marginTop: '3em',
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   content: {
-    padding: 0,
+    padding: 0
   },
   inner: {
-    minWidth: 800,
+    minWidth: 800
   },
   statusContainer: {
     display: 'flex',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   status: {
-    marginRight: '1em',
+    marginRight: '1em'
   },
   actions: {
-    justifyContent: 'flex-end',
+    justifyContent: 'flex-end'
   },
   card: {
-    width: '100%',
-    maxWidth: '920px',
-  },
+    width: '100%'
+  }
 });

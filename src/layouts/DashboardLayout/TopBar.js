@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
@@ -19,6 +19,7 @@ import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from 'src/Providers/UserProvider';
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -31,6 +32,7 @@ const useStyles = makeStyles(() => ({
 const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const classes = useStyles();
   const [notifications] = useState([]);
+  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const onLogout = e => {
     e.preventDefault();
@@ -40,17 +42,19 @@ const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   return (
     <AppBar className={clsx(classes.root, className)} elevation={0} {...rest}>
       <Toolbar>
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
+        <Logo />
         <Box flexGrow={1} />
         {/* <Hidden mdDown> */}
-        <Typography variant="subtitle1" color="initial">
-          Log out
-        </Typography>
-        <IconButton color="inherit" onClick={onLogout}>
-          <ExitToAppIcon />
-        </IconButton>
+        {user && (
+          <>
+            <Typography variant="subtitle1" color="initial">
+              Log out
+            </Typography>
+            <IconButton color="inherit" onClick={onLogout}>
+              <ExitToAppIcon />
+            </IconButton>
+          </>
+        )}
 
         {/* </Hidden> */}
         <Hidden lgUp>

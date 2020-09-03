@@ -11,25 +11,40 @@ import {
   TableRow,
   FormGroup,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  Box,
+  IconButton,
+  TextField,
+  Input
 } from '@material-ui/core';
 import useStyles from './styles';
 import defaultChecklist from '../../../../defaultChecklist.json';
+import { UserContext } from 'src/Providers/UserProvider';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
 
-export default function Checklist({ id }) {
+export default function Checklist() {
   const classes = useStyles();
-  console.log(id);
-  console.log(defaultChecklist);
-  const [checked, setChecked] = useState([
-    { name: 'item-1', checked: false },
-    { name: 'item-2', checked: false },
-    { name: 'item-3', checked: false }
-  ]);
+  const { user } = useContext(UserContext);
+
+  const [checked, setChecked] = useState(
+    user.list || [
+      { name: 'item-1', checked: false, data: '' },
+      { name: 'item-2', checked: false, data: '' },
+      { name: 'item-3', checked: false, data: '' }
+    ]
+  );
 
   const handleChange = event => {
     const index = checked.findIndex(e => e.name === event.target.name);
     let newArray = [...checked];
     newArray[index] = { ...newArray[index], checked: event.target.checked };
+    setChecked(newArray);
+  };
+
+  const handleTextChange = event => {
+    const index = checked.findIndex(e => e.name === event.target.name);
+    let newArray = [...checked];
+    newArray[index] = { ...newArray[index], data: event.target.value };
     setChecked(newArray);
   };
 
@@ -57,12 +72,23 @@ export default function Checklist({ id }) {
                           name={listItem.name}
                         />
                       }
-                      label={defaultChecklist[id][i]}
+                    />
+                    <Input
+                      id="component-simple"
+                      value={listItem.data}
+                      disableUnderline
+                      name={listItem.name}
+                      onChange={handleTextChange}
                     />
                   </TableCell>
                 </TableRow>
               ))}
             </FormGroup>
+            <Box display="flex" justifyContent="center">
+              <IconButton aria-label="add-item">
+                <AddCircleIcon />
+              </IconButton>
+            </Box>
           </TableBody>
         </Table>
       </CardContent>

@@ -22,12 +22,12 @@ const useStyles = makeStyles(theme => ({
     marginRight: 'auto'
   },
   active: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
     '& $title': {
       fontWeight: theme.typography.fontWeightMedium
     },
     '& $icon': {
-      color: theme.palette.primary.main
+      color: theme.palette.secondary.main
     }
   },
   mobileDrawer: {

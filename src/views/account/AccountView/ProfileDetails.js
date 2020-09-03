@@ -14,13 +14,22 @@ import {
   FormGroup,
   FormControlLabel,
   Checkbox,
-  Typography
+  Typography,
+  Select,
+  FormControl,
+  InputLabel,
+  MenuItem
 } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import { UserContext } from 'src/Providers/UserProvider';
-import Loading from 'src/components/Loading';
+import { updateData } from '../../../firebase';
 
-const useStyles = makeStyles(() => ({
-  root: {}
+const useStyles = makeStyles(theme => ({
+  root: {},
+  formControl: {
+    minWidth: 120,
+    margin: theme.spacing(2)
+  }
 }));
 
 const ProfileDetails = ({ className, ...rest }) => {
@@ -29,26 +38,51 @@ const ProfileDetails = ({ className, ...rest }) => {
   const [state, setState] = useState({
     name: user.name,
     course: user.course || '',
-    usa: false,
-    canada: false,
-    uk: false,
-    germany: false
+    usa: user.usa || false,
+    canada: user.canada || false,
+    uk: user.uk || false,
+    germany: user.germany || false,
+    grade: user.grade || 12,
+    scholarships: user.scholarships || false,
+    board: user.board || ''
   });
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleChange = event => {
-    console.log(event);
     setState({
       ...state,
       [event.target.name]: event.target.value
     });
+    console.log(state);
   };
 
-  const handleChangeCountry = event => {
-    console.log(event);
+  const handleChangeChecked = event => {
     setState({
       ...state,
       [event.target.name]: event.target.checked
     });
+    console.log(state);
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+    const submitName = state.name === user.name ? user.name : state.name;
+    let userData = {
+      name: submitName,
+      email: user.email,
+      use: state.usa,
+      canada: state.canada,
+      uk: state.uk,
+      germany: state.germany,
+      course: state.course,
+      grade: state.grade,
+      scholarships: state.scholarships,
+      board: state.board
+    };
+    updateData(userData, user)
+      .then(setMessage('Profile Updated, refresh page to see changes!'))
+      .catch(e => setMessage(`Error - ${e}`));
   };
 
   if (loading) {
@@ -91,7 +125,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 disabled
               />
             </Grid>
-            <Grid item md={6} xs={12}>
+            <Grid item md={12} xs={12}>
               <TextField
                 fullWidth
                 label="Course/Degree I want to pursue"
@@ -102,6 +136,44 @@ const ProfileDetails = ({ className, ...rest }) => {
                 variant="outlined"
               />
             </Grid>
+            <Grid item xs={12}>
+              <FormGroup row>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="demo-simple-select-label">Grade</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={state.grade}
+                    name="grade"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={11}>11</MenuItem>
+                    <MenuItem value={12}>12</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="demo-simple-select-label">Board</InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    value={state.board}
+                    name="board"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={'IB'}>IB</MenuItem>
+                    <MenuItem value={'CBSE'}>CBSE</MenuItem>
+                    <MenuItem value={'ICSE'}>ICSE</MenuItem>
+                    <MenuItem value={'A levels'}>Cambridge A Level</MenuItem>
+                    <MenuItem value={'Other'}>Other</MenuItem>
+                  </Select>
+                </FormControl>
+              </FormGroup>
+            </Grid>
+            {/* <Grid item xs={6}>
+              <FormControl className={classes.formControl}>
+                
+              </FormControl>
+            </Grid> */}
             <Grid item md={12} xs={12}>
               <Typography variant="body1" color="initial">
                 Countries I am applying to
@@ -110,7 +182,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onChange={handleChangeCountry}
+                      onChange={handleChangeChecked}
                       checked={state.usa}
                       name="usa"
                     />
@@ -120,7 +192,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onChange={handleChangeCountry}
+                      onChange={handleChangeChecked}
                       checked={state.canada}
                       name="canada"
                     />
@@ -130,7 +202,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onChange={handleChangeCountry}
+                      onChange={handleChangeChecked}
                       checked={state.uk}
                       name="uk"
                     />
@@ -140,7 +212,7 @@ const ProfileDetails = ({ className, ...rest }) => {
                 <FormControlLabel
                   control={
                     <Checkbox
-                      onChange={handleChangeCountry}
+                      onChange={handleChangeChecked}
                       checked={state.germany}
                       name="germany"
                     />
@@ -149,41 +221,27 @@ const ProfileDetails = ({ className, ...rest }) => {
                 />
               </FormGroup>
             </Grid>
-            {/* <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Country"
-                name="country"
-                onChange={handleChange}
-                required
-                value={values.country}
-                variant="outlined"
-              />
+            <Grid item md={12} xs={12}>
+              <FormGroup row>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      onChange={handleChangeChecked}
+                      checked={state.scholarships}
+                      name="scholarships"
+                    />
+                  }
+                  label="I am actively pursuing scholarships"
+                />
+              </FormGroup>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
-                label="Select State"
-                name="state"
-                onChange={handleChange}
-                required
-                select
-                SelectProps={{ native: true }}
-                value={values.state}
-                variant="outlined"
-              >
-                {states.map(option => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
-            </Grid> */}
           </Grid>
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
-          <Button color="primary" variant="contained">
+          {message && <Alert severity="success">{message}</Alert>}
+          {error && <Alert severity="error">{error}</Alert>}
+          <Button color="primary" variant="contained" onClick={handleSubmit}>
             Save details
           </Button>
         </Box>
