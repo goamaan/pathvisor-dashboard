@@ -1,10 +1,12 @@
-import React, { useContext, useEffect } from 'react';
-import { Container, Grid, makeStyles } from '@material-ui/core';
+import React, { useContext, useEffect, useState } from 'react';
+import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Checklist from './Checklist/Checklist';
 import { UserContext } from '../../../Providers/UserProvider';
 import Loading from 'src/components/Loading';
 import { useNavigate, Navigate } from 'react-router-dom';
+import Notes from './Notes/Notes';
+import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -12,20 +14,16 @@ const useStyles = makeStyles(theme => ({
     minHeight: '100%',
     paddingBottom: theme.spacing(3),
     paddingTop: theme.spacing(3)
+  },
+  container: {
+    textAlign: 'center'
   }
 }));
 
 const Dashboard = () => {
   const classes = useStyles();
-  const { user, loading, purchaseNames, purchaseIDS } = useContext(UserContext);
+  const { user, loading, purchaseIDS, valid } = useContext(UserContext);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const loadData = async () => {
-      await purchaseIDS;
-    };
-    loadData();
-  }, []);
 
   if (loading) {
     return <Loading />;
@@ -36,22 +34,40 @@ const Dashboard = () => {
     return null;
   }
 
-  if (purchaseIDS.length === 0) {
-    return <Loading />;
+  if (purchaseIDS.length === 0 && !loading) {
+    navigate('/404');
+    return null;
   }
 
-  console.log(user, purchaseIDS);
+  console.log(valid);
+
+  if (valid === false) {
+    return (
+      <Page className={classes.root} title="Dashboard">
+        <Container maxWidth={false}>
+          <Alert severity="error">
+            Please fill out your profile to access these features
+          </Alert>
+        </Container>
+      </Page>
+    );
+  }
 
   return (
-    <Page className={classes.root} title="Dashboard">
-      <Container maxWidth={false}>
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <Checklist />
+    <>
+      <Page className={classes.root} title="Dashboard">
+        <Container maxWidth={false}>
+          <Grid container spacing={3}>
+            <Grid item md={6} xs={12}>
+              <Checklist />
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <Notes />
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
-    </Page>
+        </Container>
+      </Page>
+    </>
   );
 };
 

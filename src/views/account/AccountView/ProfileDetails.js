@@ -71,7 +71,7 @@ const ProfileDetails = ({ className, ...rest }) => {
     let userData = {
       name: submitName,
       email: user.email,
-      use: state.usa,
+      usa: state.usa,
       canada: state.canada,
       uk: state.uk,
       germany: state.germany,
@@ -82,7 +82,7 @@ const ProfileDetails = ({ className, ...rest }) => {
     };
     updateData(userData, user)
       .then(setMessage('Profile Updated, refresh page to see changes!'))
-      .catch(e => setMessage(`Error - ${e}`));
+      .catch(e => setError(`Error - ${e}`));
   };
 
   if (loading) {

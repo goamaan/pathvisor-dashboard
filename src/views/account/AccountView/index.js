@@ -5,6 +5,7 @@ import Profile from './Profile';
 import ProfileDetails from './ProfileDetails';
 import { UserContext } from '../../../Providers/UserProvider';
 import Loading from 'src/components/Loading';
+import { useNavigate, Navigate } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -17,10 +18,20 @@ const useStyles = makeStyles(theme => ({
 
 const Account = () => {
   const classes = useStyles();
-  const { loading } = useContext(UserContext);
+  const { user, loading, purchaseIDS } = useContext(UserContext);
 
   if (loading) {
     return <Loading />;
+  }
+
+  if (!user && !loading) {
+    window.location.href = 'https://dashboard.yourpathvisor.com/login';
+    return null;
+  }
+
+  if (purchaseIDS.length === 0 && !loading) {
+    window.location.href = 'https://dashboard.yourpathvisor.com/404';
+    return null;
   }
 
   return (

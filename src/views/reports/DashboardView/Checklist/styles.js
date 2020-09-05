@@ -24,5 +24,8 @@ export default makeStyles({
   },
   card: {
     width: '100%'
+  },
+  submit: {
+    marginRight: '1em'
   }
 });

@@ -64,7 +64,6 @@ export const getPurchaseData = async user => {
     .collection(`users/${user.uid}/charges`)
     .get();
   const charges = snapshot.docs.map(data => data.id);
-  console.log(charges);
   const data = [];
   charges.forEach(async charge => {
     data.push(
@@ -76,9 +75,11 @@ export const getPurchaseData = async user => {
 
 export const updateData = async (data, user) => {
   const userRef = firestore.doc(`users/${user.uid}`);
+  const userData = (await firestore.doc(`users/${user.uid}`).get()).data();
   try {
     await userRef.set({
-      ...data
+      ...data,
+      ...userData
     });
   } catch (error) {
     console.log('Error updating data ', error);
@@ -86,7 +87,27 @@ export const updateData = async (data, user) => {
 };
 
 export const saveChecklist = async (checklist, user) => {
-  const checklistRef = firestore.collection(`users/${user.uid}/checklist`);
-  const pushId = checklistRef.doc().id;
-  checklistRef.doc(pushId).set(checklist);
+  const userRef = firestore.doc(`users/${user.uid}`);
+  const userData = (await firestore.doc(`users/${user.uid}`).get()).data();
+  try {
+    await userRef.set({
+      ...userData,
+      checklist
+    });
+  } catch (error) {
+    console.log('Error updating data ', error);
+  }
+};
+
+export const saveNotes = async (notes, user) => {
+  const userRef = firestore.doc(`users/${user.uid}`);
+  const userData = (await firestore.doc(`users/${user.uid}`).get()).data();
+  try {
+    await userRef.set({
+      ...userData,
+      notes
+    });
+  } catch (error) {
+    console.log('Error updating data ', error);
+  }
 };

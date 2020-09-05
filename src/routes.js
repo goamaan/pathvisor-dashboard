@@ -3,13 +3,11 @@ import { Navigate } from 'react-router-dom';
 import DashboardLayout from 'src/layouts/DashboardLayout';
 import MainLayout from 'src/layouts/MainLayout';
 import AccountView from 'src/views/account/AccountView';
-import CustomerListView from 'src/views/customer/CustomerListView';
+import CalendarView from 'src/views/calendar';
+import FilesView from 'src/views/files';
 import DashboardView from 'src/views/reports/DashboardView';
 import LoginView from 'src/views/auth/LoginView';
 import NotFoundView from 'src/views/errors/NotFoundView';
-import ProductListView from 'src/views/product/ProductListView';
-import RegisterView from 'src/views/auth/RegisterView';
-import SettingsView from 'src/views/settings/SettingsView';
 
 const routes = [
   {
@@ -18,6 +16,8 @@ const routes = [
     children: [
       { path: 'profile', element: <AccountView /> },
       { path: 'home', element: <DashboardView /> },
+      { path: 'calendar', element: <CalendarView /> },
+      { path: 'files', element: <FilesView /> },
       { path: '/', element: <Navigate to="/home" /> },
       { path: '*', element: <Navigate to="/404" /> }
     ]

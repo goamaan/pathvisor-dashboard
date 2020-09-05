@@ -24,7 +24,8 @@ import {
   UserPlus as UserPlusIcon,
   Users as UsersIcon,
   SkipBack,
-  File
+  File,
+  Calendar
 } from 'react-feather';
 import NavItem from './NavItem';
 import { UserContext } from '../../../Providers/UserProvider';
@@ -40,6 +41,16 @@ const items = [
     href: '/profile',
     icon: UserIcon,
     title: 'Profile'
+  },
+  {
+    href: '/calendar',
+    icon: Calendar,
+    title: 'Dates and Deadlines'
+  },
+  {
+    href: '/files',
+    icon: File,
+    title: 'Files'
   }
 ];
 
@@ -71,16 +82,6 @@ const NavBar = ({ onMobileClose, openMobile }) => {
               />
             ))}
           </List>
-          <ListItem className={classes.item} disableGutters>
-            <Button
-              activeClassName={classes.active}
-              className={classes.button}
-              disabled
-            >
-              <File className={classes.icon} size="20" />
-              <span className={classes.title}>File Upload (Coming soon)</span>
-            </Button>
-          </ListItem>
           <ListItem className={classes.item} disableGutters>
             <Button
               activeClassName={classes.active}
@@ -119,16 +120,7 @@ const NavBar = ({ onMobileClose, openMobile }) => {
                 icon={item.icon}
               />
             ))}
-            <ListItem className={classes.item} disableGutters>
-              <Button
-                activeClassName={classes.active}
-                className={classes.button}
-                disabled
-              >
-                <File className={classes.icon} size="20" />
-                <span className={classes.title}>File Upload (Coming soon)</span>
-              </Button>
-            </ListItem>
+
             <ListItem className={classes.item} disableGutters>
               <Button
                 activeClassName={classes.active}
