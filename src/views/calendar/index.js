@@ -19,6 +19,19 @@ const useStyles = makeStyles(theme => ({
   },
   header: {
     marginBottom: theme.spacing(2)
+  },
+  container: {
+    position: 'relative',
+    paddingBottom: '50%',
+    height: 500,
+    width: '75%'
+  },
+  calendar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%'
   }
 }));
 
@@ -61,15 +74,18 @@ const Calendar = () => {
           style={{ marginTop: '2em' }}
         />
       )}
-      <iframe
-        src={user.calendar}
-        style={{ border: 0 }}
-        width="800"
-        height="600"
-        frameborder="0"
-        scrolling="yes"
-        onLoad={() => setFrameLoad(false)}
-      ></iframe>
+      <div className={classes.container}>
+        <iframe
+          src={user.calendar}
+          style={{ border: 0 }}
+          width="800"
+          height="600"
+          frameborder="0"
+          scrolling="yes"
+          className={classes.calendar}
+          onLoad={() => setFrameLoad(false)}
+        ></iframe>
+      </div>
     </Page>
   );
 };
