@@ -1,10 +1,9 @@
 import { makeStyles } from '@material-ui/core';
 
-export default makeStyles({
+export default makeStyles(theme => ({
   root: {
-    marginTop: '3em',
-    display: 'flex',
-    justifyContent: 'center'
+    width: '100%',
+    backgroundColor: theme.palette.background.paper
   },
   content: {
     padding: 0
@@ -27,5 +26,17 @@ export default makeStyles({
   },
   submit: {
     marginRight: '1em'
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 500,
+    color: 'black',
+    fontSize: 16,
+    opacity: 1,
+    borderBottom: 0,
+    '&:before': {
+      borderBottom: 0
+    }
   }
-});
+}));

@@ -49,14 +49,15 @@ const UserProvider = props => {
             let mergedNames = [].concat.apply([], nameData);
             setPurchaseIDS(mergedIDS);
             setPurchaseNames(mergedNames);
-
             setLoading(false);
           });
-        setValid(
-          user.board.trim() !== '' &&
-            (user.canada || user.usa || user.uk || user.germany) &&
-            user.course.trim() !== ''
-        );
+        if (user.board && user.course) {
+          setValid(
+            user.board.trim() !== '' &&
+              (user.canada || user.usa || user.uk || user.germany) &&
+              user.course.trim() !== ''
+          );
+        }
       }
       getData();
     }

@@ -59,7 +59,7 @@ const Files = () => {
         />
       )}
       <iframe
-        src={`https://drive.google.com/embeddedfolderview?id=1JSYpg24-Ad_QFuRXXP2jajAqb0yY4Wkh#list`}
+        src={`https://drive.google.com/embeddedfolderview?id=${user.drive}#list`}
         style={{ width: '60%', height: '600px', border: 0, marginTop: '2em' }}
         onLoad={() => setFrameLoad(false)}
       ></iframe>

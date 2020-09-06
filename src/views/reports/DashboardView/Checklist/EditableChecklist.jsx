@@ -98,12 +98,13 @@ export default function EditableChecklist({
           className={classes.textField}
           onMouseEnter={handleMouseOver}
           onMouseLeave={handleMouseOut}
+          multiline
           InputProps={{
             classes: {
               disabled: classes.disabled
             },
-            endAdornment: mouseOver ? (
-              <InputAdornment position="end">
+            startAdornment: mouseOver ? (
+              <InputAdornment position="start">
                 <IconButton onClick={handleClick}>
                   <Edit />
                 </IconButton>

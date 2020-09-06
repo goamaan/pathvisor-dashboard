@@ -25,6 +25,12 @@ const Dashboard = () => {
   const { user, loading, purchaseIDS, valid } = useContext(UserContext);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (purchaseIDS.length === 0 && !loading && user) {
+      navigate('/404');
+    }
+  }, []);
+
   if (loading) {
     return <Loading />;
   }
@@ -33,13 +39,6 @@ const Dashboard = () => {
     navigate('/login');
     return null;
   }
-
-  if (purchaseIDS.length === 0 && !loading) {
-    navigate('/404');
-    return null;
-  }
-
-  console.log(valid);
 
   if (valid === false) {
     return (
