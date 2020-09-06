@@ -5,7 +5,6 @@ import Profile from './Profile';
 import ProfileDetails from './ProfileDetails';
 import { UserContext } from '../../../Providers/UserProvider';
 import Loading from 'src/components/Loading';
-import { useNavigate, Navigate } from 'react-router';
 
 const useStyles = makeStyles(theme => ({
   root: {

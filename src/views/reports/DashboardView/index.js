@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import React, { useContext, useEffect } from 'react';
+import { Container, Grid, makeStyles } from '@material-ui/core';
 import Page from 'src/components/Page';
 import Checklist from './Checklist/Checklist';
 import { UserContext } from '../../../Providers/UserProvider';
 import Loading from 'src/components/Loading';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Notes from './Notes/Notes';
 import { Alert } from '@material-ui/lab';
 
@@ -29,7 +29,7 @@ const Dashboard = () => {
     if (purchaseIDS.length === 0 && !loading && user) {
       navigate('/404');
     }
-  }, []);
+  }, [purchaseIDS.length, loading, navigate, user]);
 
   if (loading) {
     return <Loading />;

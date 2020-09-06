@@ -14,7 +14,6 @@ const UserProvider = props => {
   const [user, setUser] = useState(null);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [purchases, setPurchases] = useState([]);
   const [purchaseIDS, setPurchaseIDS] = useState([]);
   const [purchaseNames, setPurchaseNames] = useState([]);
   const [valid, setValid] = useState(null);
@@ -42,7 +41,6 @@ const UserProvider = props => {
             snapshot.docs.map(doc => final.push(doc.data()));
             setData(final);
             const newData = final.map(items => items.items.map(item => item));
-            setPurchases(newData);
             let idData = newData.map(e => e.map(item => item.id));
             let nameData = newData.map(e => e.map(item => item.name));
             let mergedIDS = [].concat.apply([], idData);
@@ -62,14 +60,6 @@ const UserProvider = props => {
       getData();
     }
   }, [user]);
-
-  // purchases.map(e =>
-  //   e.map(item => {
-  //     purchaseIDS.push(item.id);
-  //     purchaseNames.push(item.name);
-  //     return null;
-  //   })
-  // );
 
   return (
     <UserContext.Provider

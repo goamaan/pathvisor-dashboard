@@ -1,21 +1,17 @@
-import React, { useState, useContext } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
+import React, { useContext } from 'react';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import {
   AppBar,
-  Badge,
   Box,
   Hidden,
   IconButton,
   Toolbar,
   makeStyles,
-  Tooltip,
   Typography
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import InputIcon from '@material-ui/icons/Input';
 import Logo from 'src/components/Logo';
 import { auth } from '../../firebase';
 import { useNavigate } from 'react-router-dom';
@@ -31,7 +27,6 @@ const useStyles = makeStyles(() => ({
 
 const TopBar = ({ className, onMobileNavOpen, ...rest }) => {
   const classes = useStyles();
-  const [notifications] = useState([]);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const onLogout = e => {

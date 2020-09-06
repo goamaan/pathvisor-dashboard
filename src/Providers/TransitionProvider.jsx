@@ -1,16 +1,15 @@
-import React, { useState, useEffect, createContext } from 'react';
-import { auth, generateUserDocument } from '../firebase';
+import React, { createContext } from 'react';
 
 export const TransitionContext = createContext({ user: null });
 
-const TransitionProvider = (props) => {
+const TransitionProvider = props => {
   const pageTransitions = {
     in: {
-      opacity: 1,
+      opacity: 1
     },
     out: {
-      opacity: 0,
-    },
+      opacity: 0
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import Page from 'src/components/Page';
 import { UserContext } from '../../Providers/UserProvider';
 import Loading from 'src/components/Loading';
@@ -55,7 +55,7 @@ const Calendar = () => {
   }
 
   return (
-    <Page className={classes.root} title="Account">
+    <Page className={classes.root} title="Calendar">
       <Typography variant="h4" color="initial" className={classes.header}>
         Your Calendar
       </Typography>
@@ -84,6 +84,7 @@ const Calendar = () => {
           scrolling="yes"
           className={classes.calendar}
           onLoad={() => setFrameLoad(false)}
+          title="calendar"
         ></iframe>
       </div>
     </Page>

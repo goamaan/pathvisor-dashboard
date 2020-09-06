@@ -1,8 +1,7 @@
 import React, { useEffect, useContext } from 'react';
-import { Link as RouterLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {
-  Avatar,
   Box,
   Button,
   Divider,
@@ -10,19 +9,11 @@ import {
   Hidden,
   List,
   Typography,
-  makeStyles,
-  ListItem,
-  Link
+  ListItem
 } from '@material-ui/core';
 import {
-  AlertCircle as AlertCircleIcon,
   BarChart as BarChartIcon,
-  Lock as LockIcon,
-  Settings as SettingsIcon,
-  ShoppingBag as ShoppingBagIcon,
   User as UserIcon,
-  UserPlus as UserPlusIcon,
-  Users as UsersIcon,
   SkipBack,
   File,
   Calendar

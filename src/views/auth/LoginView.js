@@ -6,8 +6,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
-  Link,
   TextField,
   Typography,
   makeStyles
@@ -157,7 +155,7 @@ const LoginView = () => {
                   <a
                     component={RouterLink}
                     target="_blank"
-                    rel="noopener noreference"
+                    rel="noopener noreferrer"
                     href="http://yourpathvisor.com/signup"
                     variant="h6"
                   >

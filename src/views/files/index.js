@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Container, Grid, makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Typography } from '@material-ui/core';
 import Page from 'src/components/Page';
 import { UserContext } from '../../Providers/UserProvider';
 import Loading from 'src/components/Loading';
@@ -42,7 +42,7 @@ const Files = () => {
   }
 
   return (
-    <Page className={classes.root} title="Account">
+    <Page className={classes.root} title="Files">
       <Typography variant="h4" color="initial" className={classes.header}>
         Your Google Drive
       </Typography>
@@ -62,6 +62,7 @@ const Files = () => {
         src={`https://drive.google.com/embeddedfolderview?id=${user.drive}#list`}
         style={{ width: '60%', height: '600px', border: 0, marginTop: '2em' }}
         onLoad={() => setFrameLoad(false)}
+        title="files"
       ></iframe>
     </Page>
   );

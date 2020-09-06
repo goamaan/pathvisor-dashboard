@@ -76,10 +76,30 @@ export const getPurchaseData = async user => {
 export const updateData = async (data, user) => {
   const userRef = firestore.doc(`users/${user.uid}`);
   const userData = (await firestore.doc(`users/${user.uid}`).get()).data();
+  const {
+    name,
+    usa,
+    canada,
+    uk,
+    germany,
+    course,
+    grade,
+    scholarships,
+    board
+  } = data;
+
   try {
     await userRef.set({
-      ...data,
-      ...userData
+      ...userData,
+      name,
+      usa,
+      canada,
+      uk,
+      germany,
+      course,
+      grade,
+      scholarships,
+      board
     });
   } catch (error) {
     console.log('Error updating data ', error);
