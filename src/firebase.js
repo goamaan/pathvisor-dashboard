@@ -32,9 +32,7 @@ export const generateUserDocument = async (user, additionalData) => {
         email,
         ...additionalData
       });
-    } catch (error) {
-      console.error('Error creating user document', error);
-    }
+    } catch (error) {}
   }
   return getUserDocument(user.uid);
 };
@@ -48,9 +46,7 @@ const getUserDocument = async uid => {
       uid,
       ...userDocument.data()
     };
-  } catch (error) {
-    console.error('Error fetching user', error);
-  }
+  } catch (error) {}
 };
 
 export const saveDataToFireStore = async (stripeObject, user) => {
@@ -101,9 +97,7 @@ export const updateData = async (data, user) => {
       scholarships,
       board
     });
-  } catch (error) {
-    console.log('Error updating data ', error);
-  }
+  } catch (error) {}
 };
 
 export const saveChecklist = async (checklist, user) => {
@@ -114,9 +108,7 @@ export const saveChecklist = async (checklist, user) => {
       ...userData,
       checklist
     });
-  } catch (error) {
-    console.log('Error updating data ', error);
-  }
+  } catch (error) {}
 };
 
 export const saveNotes = async (notes, user) => {
@@ -127,7 +119,5 @@ export const saveNotes = async (notes, user) => {
       ...userData,
       notes
     });
-  } catch (error) {
-    console.log('Error updating data ', error);
-  }
+  } catch (error) {}
 };

@@ -52,16 +52,15 @@ export default function Notes() {
       id: `item-${num}`,
       content: currentNote
     };
-    // console.log(notes.concat(objectToAdd));
+    //
     setNotes(notes.concat(objectToAdd));
-    console.log(num, objectToAdd, notes);
+
     saveNotes(notes.concat(objectToAdd), user)
       .then(setCurrentNote(''))
       .catch(e => setError(`Error - ${e}`));
   };
 
   const handleRemove = (event, id) => {
-    console.log(event, id);
     const newNotes = notes.filter(note => note.id !== id);
     setNotes(newNotes);
     saveNotes(newNotes, user).catch(e => setError(`Error - ${e}`));

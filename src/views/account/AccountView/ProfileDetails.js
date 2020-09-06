@@ -54,7 +54,6 @@ const ProfileDetails = ({ className, ...rest }) => {
       ...state,
       [event.target.name]: event.target.value
     });
-    console.log(state);
   };
 
   const handleChangeChecked = event => {
@@ -62,7 +61,6 @@ const ProfileDetails = ({ className, ...rest }) => {
       ...state,
       [event.target.name]: event.target.checked
     });
-    console.log(state);
   };
 
   const handleSubmit = event => {

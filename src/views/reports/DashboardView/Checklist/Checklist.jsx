@@ -57,20 +57,18 @@ export default function Checklist() {
       checked: false,
       data: 'New Item'
     };
-    console.log(checked.concat(objectToAdd));
+
     setChecked(checked.concat(objectToAdd));
   };
 
   const handleRemove = (event, id) => {
-    console.log(event, id);
     setChecked(prevState => prevState.filter(item => item.name !== id));
-    console.log(checked);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
     const list = [...checked];
-    console.log(list);
+
     saveChecklist(list, user)
       .then(setMessage('Checklist Updated! Refresh for changes'))
       .catch(e => setError(`Error - ${e}`));
